@@ -1,3 +1,5 @@
+console.log('load success');
+
 const express = require('express');
 const aws = require('aws-sdk');
 
@@ -5,12 +7,16 @@ const aws = require('aws-sdk');
 aws.config.region = 'ap-northeast-1';
 
 const app = express();
-app.set('views', './views');
-app.use(express.static('./public'));
+app.set('views', './NodeDirectUploader/views');
+app.use(express.static('./NodeDirectUploader/public'));
 app.engine('html', require('ejs').renderFile);
-app.listen(process.env.PORT || 3000);
+let serv = app.listen(process.env.PORT || 3000, () => {
+  console.log(`Listening on port :${serv.address().port}`)
+});
 
 const S3_BUCKET = process.env.S3_BUCKET;
+
+console.log(S3_BUCKET);
 
 app.get('/account', (req, res) => res.render('account.html'));
 
